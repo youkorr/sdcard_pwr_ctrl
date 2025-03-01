@@ -11,5 +11,18 @@ void SDCardPowerControl::setup() {
   }
 }
 
+// Enregistrer le composant dans ESPHome
+static const esphome::ComponentSchema SCHEMA = {
+    .name = "sdcard_pwr_ctrl",
+    .config_schema = {
+        {"power_pin", esphome::config_validation::SchemaType::GPIO_PIN},
+    },
+    .create_component = [](const esphome::Config &config) -> esphome::Component * {
+      auto *component = new SDCardPowerControlComponent();
+      component->set_power_pin(config["power_pin"].as<esphome::GPIOPin *>());
+      return component;
+    },
+};
+
 }  // namespace sdcard_pwr_ctrl
 }  // namespace esphome
