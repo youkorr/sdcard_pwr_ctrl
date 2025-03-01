@@ -34,8 +34,8 @@ class SDCard : public Component {
     data3_pin_num_ = pin ? pin->get_pin() : -1;
   }
 
-  void setup();
-  void dump_config();
+  void setup() override;
+  void dump_config() override;
   void init_power_pin_();
   void init_sd_card_();
 
@@ -52,6 +52,10 @@ class SDCard : public Component {
   int data2_pin_num_;
   GPIOPin *data3_pin_;
   int data3_pin_num_;
+  GPIOPin *power_pin_;
+  bool mode_1bit_;
+  bool mounted_;
+  sdmmc_card_t *card_;
 };
 
 }  // namespace sd_card
