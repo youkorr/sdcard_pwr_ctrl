@@ -15,17 +15,9 @@ class SDCardPower : public Component {
   void setup() override;
   void dump_config() override;
   
-  void turn_on() {
-    if (this->power_pin_ != nullptr) {
-      this->power_pin_->digital_write(true);
-    }
-  }
-  
-  void turn_off() {
-    if (this->power_pin_ != nullptr) {
-      this->power_pin_->digital_write(false);
-    }
-  }
+  // Déclarations seulement - l'implémentation sera dans le fichier .cpp
+  void turn_on();
+  void turn_off();
   
  protected:
   GPIOPin *power_pin_{nullptr};
