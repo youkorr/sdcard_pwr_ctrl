@@ -5,10 +5,11 @@
 extern "C" {
 #endif
 
-#include "driver/sdmmc_host.h"
-#include "driver/sdspi_host.h"
-#include "sdmmc_cmd.h"
-#include "esp_vfs_fat.h"
+#include <driver/gpio.h>
+#include <driver/sdmmc_host.h>
+#include <driver/sdspi_host.h>
+#include <sdmmc_cmd.h>
+#include <esp_vfs_fat.h>
 
 #ifdef __cplusplus
 }
@@ -29,13 +30,8 @@ void SDCard::setup() {
   }
 
   this->init_power_pin_();
-  delay(500);  // Wait for power to stabilize
+  delay(500);
   this->init_sd_card_();
-  this->update_text_sensors_();
-}
-
-void SDCard::loop() {
-  this->update_text_sensors_();
 }
 
 void SDCard::dump_config() {
@@ -53,7 +49,7 @@ void SDCard::dump_config() {
 
 void SDCard::init_power_pin_() {
   this->power_pin_->setup();
-  this->power_pin_->digital_write(true);  // Turn on SD card power
+  this->power_pin_->digital_write(true);
   ESP_LOGI(TAG, "SD Card power turned ON");
 }
 
@@ -81,15 +77,15 @@ void SDCard::init_sd_card_() {
       .allocation_unit_size = 16 * 1024
   };
 
-  esp_err_t ret = esp_vfs_fat_sdmmc_mount("/sdcard", &host, &slot_config, &mount_config, &this->card_);
+  sdmmc_card_t *card = nullptr;
+  esp_err_t ret = esp_vfs_fat_sdmmc_mount("/sdcard", &host, &slot_config, &mount_config, &card);
+  this->card_ = card;
 
   if (ret != ESP_OK) {
     if (ret == ESP_FAIL) {
       ESP_LOGE(TAG, "Failed to mount filesystem.");
     } else {
-      ESP_LOGE(TAG, "Failed to initialize the card (%s). "
-               "Make sure SD card lines have pull-up resistors in place.",
-               esp_err_to_name(ret));
+      ESP_LOGE(TAG, "Failed to initialize the card (%s)", esp_err_to_name(ret));
     }
     return;
   }
@@ -98,15 +94,6 @@ void SDCard::init_sd_card_() {
   ESP_LOGI(TAG, "SD card mounted successfully");
 }
 
-void SDCard::update_text_sensors_() {
-  if (this->sd_card_type_sensor_ != nullptr) {
-    this->sd_card_type_sensor_->publish_state(this->card_ ? "SD Card" : "No Card");
-  }
-
-  if (this->sd_card_status_sensor_ != nullptr) {
-    this->sd_card_status_sensor_->publish_state(this->mounted_ ? "Mounted" : "Not Mounted");
-  }
-}
-
 }  // namespace sd_card
 }  // namespace esphome
+
