@@ -58,13 +58,13 @@ void SDCard::init_sd_card_() {
 
   sdmmc_slot_config_t slot_config = SDMMC_SLOT_CONFIG_DEFAULT();
   slot_config.width = this->mode_1bit_ ? 1 : 4;
-  slot_config.clk = static_cast<gpio_num_t>(this->clk_pin_->pin_);
-  slot_config.cmd = static_cast<gpio_num_t>(this->cmd_pin_->pin_);
-  slot_config.d0 = static_cast<gpio_num_t>(this->data0_pin_->pin_);
+  slot_config.clk = static_cast<gpio_num_t>(this->clk_pin_->to_int());
+  slot_config.cmd = static_cast<gpio_num_t>(this->cmd_pin_->to_int());
+  slot_config.d0 = static_cast<gpio_num_t>(this->data0_pin_->to_int());
   if (!this->mode_1bit_) {
-    slot_config.d1 = static_cast<gpio_num_t>(this->data1_pin_->pin_);
-    slot_config.d2 = static_cast<gpio_num_t>(this->data2_pin_->pin_);
-    slot_config.d3 = static_cast<gpio_num_t>(this->data3_pin_->pin_);
+    slot_config.d1 = static_cast<gpio_num_t>(this->data1_pin_->to_int());
+    slot_config.d2 = static_cast<gpio_num_t>(this->data2_pin_->to_int());
+    slot_config.d3 = static_cast<gpio_num_t>(this->data3_pin_->to_int());
   }
 
   esp_vfs_fat_sdmmc_mount_config_t mount_config = {
