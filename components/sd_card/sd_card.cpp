@@ -27,13 +27,13 @@ void SDCard::setup() {
 
 void SDCard::dump_config() {
   ESP_LOGCONFIG(TAG, "SD Card:");
-  LOG_PIN("  CLK Pin: ", this->clk_pin_);
-  LOG_PIN("  CMD Pin: ", this->cmd_pin_);
-  LOG_PIN("  D0 Pin: ", this->data0_pin_);
-  LOG_PIN("  D1 Pin: ", this->data1_pin_);
-  LOG_PIN("  D2 Pin: ", this->data2_pin_);
-  LOG_PIN("  D3 Pin: ", this->data3_pin_);
-  LOG_PIN("  Power Pin: ", this->power_pin_);
+  ESP_LOGCONFIG(TAG, "  CLK Pin: GPIO%d", this->clk_pin_number_);
+  ESP_LOGCONFIG(TAG, "  CMD Pin: GPIO%d", this->cmd_pin_number_);
+  ESP_LOGCONFIG(TAG, "  D0 Pin: GPIO%d", this->data0_pin_number_);
+  ESP_LOGCONFIG(TAG, "  D1 Pin: GPIO%d", this->data1_pin_number_);
+  ESP_LOGCONFIG(TAG, "  D2 Pin: GPIO%d", this->data2_pin_number_);
+  ESP_LOGCONFIG(TAG, "  D3 Pin: GPIO%d", this->data3_pin_number_);
+  ESP_LOGCONFIG(TAG, "  Power Pin: GPIO%d", this->power_pin_number_);
   ESP_LOGCONFIG(TAG, "  Mode: %s", this->mode_1bit_ ? "1-bit" : "4-bit");
   ESP_LOGCONFIG(TAG, "  Mounted: %s", YESNO(this->mounted_));
 }
@@ -53,13 +53,13 @@ void SDCard::init_sd_card_() {
 
   sdmmc_slot_config_t slot_config = SDMMC_SLOT_CONFIG_DEFAULT();
   slot_config.width = this->mode_1bit_ ? 1 : 4;
-  slot_config.clk = static_cast<gpio_num_t>(this->clk_pin_->get_pin());
-  slot_config.cmd = static_cast<gpio_num_t>(this->cmd_pin_->get_pin());
-  slot_config.d0 = static_cast<gpio_num_t>(this->data0_pin_->get_pin());
+  slot_config.clk = static_cast<gpio_num_t>(this->clk_pin_number_);
+  slot_config.cmd = static_cast<gpio_num_t>(this->cmd_pin_number_);
+  slot_config.d0 = static_cast<gpio_num_t>(this->data0_pin_number_);
   if (!this->mode_1bit_) {
-    slot_config.d1 = static_cast<gpio_num_t>(this->data1_pin_->get_pin());
-    slot_config.d2 = static_cast<gpio_num_t>(this->data2_pin_->get_pin());
-    slot_config.d3 = static_cast<gpio_num_t>(this->data3_pin_->get_pin());
+    slot_config.d1 = static_cast<gpio_num_t>(this->data1_pin_number_);
+    slot_config.d2 = static_cast<gpio_num_t>(this->data2_pin_number_);
+    slot_config.d3 = static_cast<gpio_num_t>(this->data3_pin_number_);
   }
 
   esp_vfs_fat_sdmmc_mount_config_t mount_config = {
