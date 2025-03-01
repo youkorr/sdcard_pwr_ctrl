@@ -32,6 +32,11 @@ void SDCard::setup() {
   this->init_power_pin_();
   delay(500);
   this->init_sd_card_();
+  this->update_text_sensors_();
+}
+
+void SDCard::loop() {
+  this->update_text_sensors_();
 }
 
 void SDCard::dump_config() {
@@ -92,6 +97,16 @@ void SDCard::init_sd_card_() {
 
   this->mounted_ = true;
   ESP_LOGI(TAG, "SD card mounted successfully");
+}
+
+void SDCard::update_text_sensors_() {
+  if (this->sd_card_type_sensor_ != nullptr) {
+    this->sd_card_type_sensor_->publish_state(this->card_ ? "SD Card" : "No Card");
+  }
+
+  if (this->sd_card_status_sensor_ != nullptr) {
+    this->sd_card_status_sensor_->publish_state(this->mounted_ ? "Mounted" : "Not Mounted");
+  }
 }
 
 }  // namespace sd_card
