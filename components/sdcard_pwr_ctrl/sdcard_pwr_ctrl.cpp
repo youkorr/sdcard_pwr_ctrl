@@ -1,28 +1,52 @@
-#include "sdcard_pwr_ctrl.h"
+#include "sd_card_power.h"
+#include "esphome/core/log.h"
 
 namespace esphome {
-namespace sdcard_pwr_ctrl {
+namespace sd_card_power {
 
-void SDCardPowerControl::setup() {
+static const char *TAG = "sd_card_power";
+
+void SDCardPower::setup() {
+  if (this->power_pin_ == nullptr) {
+    ESP_LOGE(TAG, "Power pin not set!");
+    this->mark_failed();
+    return;
+  }
+  
+  this->power_pin_->setup();
+  
+  // Appliquer l'état initial selon la configuration
+  if (this->power_on_boot_) {
+    this->turn_on();
+  } else {
+    this->turn_off();
+  }
+  
+  ESP_LOGI(TAG, "SD Card power component initialized, power %s at boot", 
+           this->power_on_boot_ ? "ON" : "OFF");
+}
+
+void SDCardPower::dump_config() {
+  ESP_LOGCONFIG(TAG, "SD Card Power:");
+  LOG_PIN("  Power Pin: ", this->power_pin_);
+  ESP_LOGCONFIG(TAG, "  Power On Boot: %s", this->power_on_boot_ ? "YES" : "NO");
+  ESP_LOGCONFIG(TAG, "  Inverted: %s", this->inverted_ ? "YES" : "NO");
+  ESP_LOGCONFIG(TAG, "  Current State: %s", this->is_on_ ? "ON" : "OFF");
+}
+
+void SDCardPower::turn_on() {
   if (this->power_pin_ != nullptr) {
-    this->power_pin_->setup();
-    this->power_pin_->digital_write(true); // Activer l'alimentation (HIGH)
-    ESP_LOGD("SDCardPowerControl", "Alimentation du lecteur SD activée via GPIO43");
+    this->write_state_(true);
+    ESP_LOGI(TAG, "SD Card power turned ON");
   }
 }
 
-// Enregistrer le composant dans ESPHome
-static const esphome::ComponentSchema SCHEMA = {
-    .name = "sdcard_pwr_ctrl",
-    .config_schema = {
-        {"power_pin", esphome::config_validation::SchemaType::GPIO_PIN},
-    },
-    .create_component = [](const esphome::Config &config) -> esphome::Component * {
-      auto *component = new SDCardPowerControl();
-      component->set_power_pin(config["power_pin"].as<esphome::GPIOPin *>());
-      return component;
-    },
-};
+void SDCardPower::turn_off() {
+  if (this->power_pin_ != nullptr) {
+    this->write_state_(false);
+    ESP_LOGI(TAG, "SD Card power turned OFF");
+  }
+}
 
-}  // namespace sdcard_pwr_ctrl
+}  // namespace sd_card_power
 }  // namespace esphome
