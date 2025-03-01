@@ -32,12 +32,12 @@ void SDCard::loop() {
 
 void SDCard::dump_config() {
   ESP_LOGCONFIG(TAG, "SD Card:");
-  ESP_LOGCONFIG(TAG, "  CLK Pin: %d", this->clk_pin_num_);
-  ESP_LOGCONFIG(TAG, "  CMD Pin: %d", this->cmd_pin_num_);
-  ESP_LOGCONFIG(TAG, "  D0 Pin: %d", this->data0_pin_num_);
-  ESP_LOGCONFIG(TAG, "  D1 Pin: %d", this->data1_pin_num_);
-  ESP_LOGCONFIG(TAG, "  D2 Pin: %d", this->data2_pin_num_);
-  ESP_LOGCONFIG(TAG, "  D3 Pin: %d", this->data3_pin_num_);
+  ESP_LOGCONFIG(TAG, "  CLK Pin: GPIO%d", this->clk_pin_num_);
+  ESP_LOGCONFIG(TAG, "  CMD Pin: GPIO%d", this->cmd_pin_num_);
+  ESP_LOGCONFIG(TAG, "  D0 Pin: GPIO%d", this->data0_pin_num_);
+  ESP_LOGCONFIG(TAG, "  D1 Pin: GPIO%d", this->data1_pin_num_);
+  ESP_LOGCONFIG(TAG, "  D2 Pin: GPIO%d", this->data2_pin_num_);
+  ESP_LOGCONFIG(TAG, "  D3 Pin: GPIO%d", this->data3_pin_num_);
   LOG_PIN("  Power Pin: ", this->power_pin_);
   ESP_LOGCONFIG(TAG, "  Mode: %s", this->mode_1bit_ ? "1-bit" : "4-bit");
   ESP_LOGCONFIG(TAG, "  Mounted: %s", YESNO(this->mounted_));
