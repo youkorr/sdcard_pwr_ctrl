@@ -9,12 +9,12 @@ namespace sd_card {
 
 class SDCard : public Component {
  public:
-  void set_clk_pin(GPIOPin *pin) { clk_pin_ = pin; }
-  void set_cmd_pin(GPIOPin *pin) { cmd_pin_ = pin; }
-  void set_data0_pin(GPIOPin *pin) { data0_pin_ = pin; }
-  void set_data1_pin(GPIOPin *pin) { data1_pin_ = pin; }
-  void set_data2_pin(GPIOPin *pin) { data2_pin_ = pin; }
-  void set_data3_pin(GPIOPin *pin) { data3_pin_ = pin; }
+  void set_clk_pin(uint8_t pin) { clk_pin_number_ = pin; }
+  void set_cmd_pin(uint8_t pin) { cmd_pin_number_ = pin; }
+  void set_data0_pin(uint8_t pin) { data0_pin_number_ = pin; }
+  void set_data1_pin(uint8_t pin) { data1_pin_number_ = pin; }
+  void set_data2_pin(uint8_t pin) { data2_pin_number_ = pin; }
+  void set_data3_pin(uint8_t pin) { data3_pin_number_ = pin; }
   void set_power_pin(GPIOPin *pin) { power_pin_ = pin; }
   void set_mode_1bit(bool mode) { mode_1bit_ = mode; }
 
@@ -27,12 +27,13 @@ class SDCard : public Component {
   void init_power_pin_();
   void init_sd_card_();
 
-  GPIOPin *clk_pin_{nullptr};
-  GPIOPin *cmd_pin_{nullptr};
-  GPIOPin *data0_pin_{nullptr};
-  GPIOPin *data1_pin_{nullptr};
-  GPIOPin *data2_pin_{nullptr};
-  GPIOPin *data3_pin_{nullptr};
+  uint8_t clk_pin_number_{0};
+  uint8_t cmd_pin_number_{0};
+  uint8_t data0_pin_number_{0};
+  uint8_t data1_pin_number_{0};
+  uint8_t data2_pin_number_{0};
+  uint8_t data3_pin_number_{0};
+  uint8_t power_pin_number_{0};
   GPIOPin *power_pin_{nullptr};
   bool mode_1bit_{true};
   bool mounted_{false};
