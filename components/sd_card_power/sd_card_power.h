@@ -15,7 +15,6 @@ class SDCardPower : public Component {
   void setup() override;
   void dump_config() override;
   
-  // Déclarations seulement - l'implémentation sera dans le fichier .cpp
   void turn_on();
   void turn_off();
   
@@ -26,7 +25,6 @@ class SDCardPower : public Component {
   
   bool is_on_{false};
   
-  // Méthode interne pour écrire sur la broche avec inversion si nécessaire
   void write_state_(bool state) {
     is_on_ = state;
     this->power_pin_->digital_write(inverted_ ? !state : state);
