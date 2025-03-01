@@ -1,50 +1,23 @@
 #include "sd_card.h"
 #include "esphome/core/log.h"
-#include "esphome/core/hal.h"
 
-// Déclarations externes pour éviter les problèmes de compilation
+#ifdef __cplusplus
 extern "C" {
+#endif
+
 #include "driver/sdmmc_host.h"
 #include "driver/sdspi_host.h"
 #include "sdmmc_cmd.h"
 #include "esp_vfs_fat.h"
+
+#ifdef __cplusplus
 }
+#endif
 
 namespace esphome {
 namespace sd_card {
 
-static const char *TAG = "sd_card";
-
-// Implémentation des méthodes set_*_pin
-void SDCard::set_clk_pin(GPIOPin *pin) { 
-  clk_pin_ = pin; 
-  clk_pin_num_ = pin ? pin->get_pin_number() : -1; 
-}
-
-void SDCard::set_cmd_pin(GPIOPin *pin) { 
-  cmd_pin_ = pin; 
-  cmd_pin_num_ = pin ? pin->get_pin_number() : -1; 
-}
-
-void SDCard::set_data0_pin(GPIOPin *pin) { 
-  data0_pin_ = pin; 
-  data0_pin_num_ = pin ? pin->get_pin_number() : -1; 
-}
-
-void SDCard::set_data1_pin(GPIOPin *pin) { 
-  data1_pin_ = pin; 
-  data1_pin_num_ = pin ? pin->get_pin_number() : -1; 
-}
-
-void SDCard::set_data2_pin(GPIOPin *pin) { 
-  data2_pin_ = pin; 
-  data2_pin_num_ = pin ? pin->get_pin_number() : -1; 
-}
-
-void SDCard::set_data3_pin(GPIOPin *pin) { 
-  data3_pin_ = pin; 
-  data3_pin_num_ = pin ? pin->get_pin_number() : -1; 
-}
+static const char *const TAG = "sd_card";
 
 void SDCard::setup() {
   ESP_LOGCONFIG(TAG, "Setting up SD Card...");
