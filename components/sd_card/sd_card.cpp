@@ -1,19 +1,12 @@
 #include "sd_card.h"
 #include "esphome/core/log.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
+// Suppression des blocs extern "C" qui causent des problèmes
 #include <driver/gpio.h>
 #include <driver/sdmmc_host.h>
 #include <driver/sdspi_host.h>
 #include <sdmmc_cmd.h>
 #include <esp_vfs_fat.h>
-
-#ifdef __cplusplus
-}
-#endif
 
 namespace esphome {
 namespace sd_card {
