@@ -13,7 +13,7 @@ from esphome.const import (
 
 DEPENDENCIES = ["esp32"]
 
-sd_card_power = sd_card_ns.class_("sd_card_power", cg.Component)
+sd_card_ns = cg.esphome_ns.namespace("sd_card")
 SDCard = sd_card_ns.class_("SDCard", cg.Component)
 
 CONF_MODE_1BIT = "mode_1bit"
