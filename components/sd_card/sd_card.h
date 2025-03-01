@@ -34,6 +34,11 @@ class SDCard : public Component {
     data3_pin_num_ = pin ? pin->get_pin() : -1;
   }
 
+  void setup();
+  void dump_config();
+  void init_power_pin_();
+  void init_sd_card_();
+
  private:
   GPIOPin *clk_pin_;
   int clk_pin_num_;
