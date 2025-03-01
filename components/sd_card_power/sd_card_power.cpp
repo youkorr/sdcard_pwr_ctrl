@@ -15,7 +15,6 @@ void SDCardPower::setup() {
   
   this->power_pin_->setup();
   
-  // Appliquer l'état initial selon la configuration
   if (this->power_on_boot_) {
     this->turn_on();
   } else {
