@@ -1,7 +1,7 @@
-#pragma once
+#p#pragma once
 
 #include "esphome/core/component.h"
-#include "esphome/components/sdcard/sdcard.h"
+#include "esphome/components/sd_mmc_card/sd_mmc_card.h"
 #include "driver/gpio.h"
 
 namespace esphome {
@@ -17,16 +17,14 @@ namespace esp32s3box3_sd_card {
 
 class ESP32S3BOX3SDCard : public Component {
  public:
+  void set_sd_mmc_card(sd_mmc_card::SdMmc *sd_mmc) { sd_mmc_ = sd_mmc; }
   void setup() override;
   void dump_config() override;
-  
-  sdcard::SDCard *get_sdcard() { return &this->sd_card_; }
 
  protected:
   void init_power_pin_();
-  void init_sd_card_();
 
-  sdcard::SDCard sd_card_;
+  sd_mmc_card::SdMmc *sd_mmc_{nullptr};
 };
 
 }  // namespace esp32s3box3_sd_card
