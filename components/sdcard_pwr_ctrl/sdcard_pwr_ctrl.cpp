@@ -18,7 +18,7 @@ static const esphome::ComponentSchema SCHEMA = {
         {"power_pin", esphome::config_validation::SchemaType::GPIO_PIN},
     },
     .create_component = [](const esphome::Config &config) -> esphome::Component * {
-      auto *component = new SDCardPowerControlComponent();
+      auto *component = new SDCardPowerControl();
       component->set_power_pin(config["power_pin"].as<esphome::GPIOPin *>());
       return component;
     },
