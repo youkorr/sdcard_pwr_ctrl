@@ -12,30 +12,29 @@ class SDCard : public Component {
  public:
   void set_clk_pin(GPIOPin *pin) { 
     clk_pin_ = pin; 
-    clk_pin_num_ = pin ? pin->get_pin() : -1;  // Remplacement de get_gpio() par get_pin()
+    clk_pin_num_ = pin ? pin->get_gpio() : -1;  // Correction du nom de méthode
   }
   void set_cmd_pin(GPIOPin *pin) { 
     cmd_pin_ = pin; 
-    cmd_pin_num_ = pin ? pin->get_pin() : -1;  // Remplacement de get_gpio() par get_pin()
+    cmd_pin_num_ = pin ? pin->get_gpio() : -1;  // Correction du nom de méthode
   }
   void set_data0_pin(GPIOPin *pin) { 
     data0_pin_ = pin; 
-    data0_pin_num_ = pin ? pin->get_pin() : -1;  // Remplacement de get_gpio() par get_pin()
+    data0_pin_num_ = pin ? pin->get_gpio() : -1;  // Correction du nom de méthode
   }
   void set_data1_pin(GPIOPin *pin) { 
     data1_pin_ = pin; 
-    data1_pin_num_ = pin ? pin->get_pin() : -1;  // Remplacement de get_gpio() par get_pin()
+    data1_pin_num_ = pin ? pin->get_gpio() : -1;  // Correction du nom de méthode
   }
   void set_data2_pin(GPIOPin *pin) { 
     data2_pin_ = pin; 
-    data2_pin_num_ = pin ? pin->get_pin() : -1;  // Remplacement de get_gpio() par get_pin()
+    data2_pin_num_ = pin ? pin->get_gpio() : -1;  // Correction du nom de méthode
   }
   void set_data3_pin(GPIOPin *pin) { 
     data3_pin_ = pin; 
-    data3_pin_num_ = pin ? pin->get_pin() : -1;  // Remplacement de get_gpio() par get_pin()
+    data3_pin_num_ = pin ? pin->get_gpio() : -1;  // Correction du nom de méthode
   }
 
-  
   void set_power_pin(GPIOPin *pin) { power_pin_ = pin; }
   void set_mode_1bit(bool mode_1bit) { mode_1bit_ = mode_1bit; }
   void set_card_type_sensor(text_sensor::TextSensor *sensor) { sd_card_type_sensor_ = sensor; }
