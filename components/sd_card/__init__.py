@@ -20,7 +20,8 @@ CONF_MODE_1BIT = "mode_1bit"
 CONF_POWER_PIN = "power_pin"
 
 CONFIG_SCHEMA = cv.Schema({
-    cv.GenerateID(CONF_SD_CARD_ID): cv.declare_id(SDCard),
+    cv.GenerateID(): cv.declare_id(SDCard),
+    cv.Optional(CONF_SD_CARD_ID): cv.declare_id(SDCard),
     cv.Required(CONF_CLK_PIN): pins.gpio_output_pin_schema,
     cv.Required(CONF_CMD_PIN): pins.gpio_output_pin_schema,
     cv.Required(CONF_DATA0_PIN): pins.gpio_output_pin_schema,
@@ -32,8 +33,11 @@ CONFIG_SCHEMA = cv.Schema({
 }).extend(cv.COMPONENT_SCHEMA)
 
 async def to_code(config):
-    var = cg.new_Pvariable(config[CONF_SD_CARD_ID])
+    var = cg.new_Pvariable(config[CONF_ID])
     await cg.register_component(var, config)
+
+    if CONF_SD_CARD_ID in config:
+        cg.add(cg.Pvariable(config[CONF_SD_CARD_ID], var))
 
     clk = await cg.gpio_pin_expression(config[CONF_CLK_PIN])
     cg.add(var.set_clk_pin(clk))
