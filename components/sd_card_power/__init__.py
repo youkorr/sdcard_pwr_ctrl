@@ -2,10 +2,11 @@ import esphome.codegen as cg
 import esphome.config_validation as cv
 from esphome.const import CONF_ID, CONF_CLK_PIN, CONF_CMD_PIN, CONF_DATA0_PIN, CONF_DATA1_PIN, CONF_DATA2_PIN, CONF_DATA3_PIN
 from esphome import pins
-from esphome.components import sd_card
+from esphome.components import sd_mmc_card
 
 DEPENDENCIES = ["esp32"]
 AUTO_LOAD = ["sd_mmc_card"]
+from esphome.core import CORE
 
 sd_card_ns = cg.esphome_ns.namespace("sd_card")
 SDCard = sd_card_ns.class_("SDCard", cg.Component)
