@@ -18,7 +18,7 @@ DEPENDENCIES = ["esp32"]
 AUTO_LOAD = ["sd_mmc_card"]
 
 
-sd_card_ns = cg.esphome_ns.namespace("sd_card")
+sd_card_ns = cg.esphome_ns.namespace("sd_card_power")
 SDCard = sd_card_ns.class_("SDCard", cg.Component)
 
 CONF_SD_MMC_CARD_ID = "sd_mmc_card_id"
