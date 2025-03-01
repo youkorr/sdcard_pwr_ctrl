@@ -1,6 +1,10 @@
 #include "sd_card.h"
 #include "esphome/core/log.h"
 #include "esphome/core/hal.h"
+#include "driver/sdmmc_host.h"
+#include "driver/sdspi_host.h"
+#include "sdmmc_cmd.h"
+#include "esp_vfs_fat.h"
 
 namespace esphome {
 namespace sd_card {
@@ -10,7 +14,7 @@ static const char *TAG = "sd_card";
 void SDCard::setup() {
   ESP_LOGCONFIG(TAG, "Setting up SD Card...");
   
-  if (this->power_pin_ < 0) {
+  if (this->power_pin_ == nullptr) {
     ESP_LOGE(TAG, "Power pin not set!");
     this->mark_failed();
     return;
@@ -23,27 +27,20 @@ void SDCard::setup() {
 
 void SDCard::dump_config() {
   ESP_LOGCONFIG(TAG, "SD Card:");
-  ESP_LOGCONFIG(TAG, "  CLK Pin: GPIO%d", this->clk_pin_);
-  ESP_LOGCONFIG(TAG, "  CMD Pin: GPIO%d", this->cmd_pin_);
-  ESP_LOGCONFIG(TAG, "  D0 Pin: GPIO%d", this->data0_pin_);
-  ESP_LOGCONFIG(TAG, "  D1 Pin: GPIO%d", this->data1_pin_);
-  ESP_LOGCONFIG(TAG, "  D2 Pin: GPIO%d", this->data2_pin_);
-  ESP_LOGCONFIG(TAG, "  D3 Pin: GPIO%d", this->data3_pin_);
-  ESP_LOGCONFIG(TAG, "  Power Pin: GPIO%d", this->power_pin_);
+  LOG_PIN("  CLK Pin: ", this->clk_pin_);
+  LOG_PIN("  CMD Pin: ", this->cmd_pin_);
+  LOG_PIN("  D0 Pin: ", this->data0_pin_);
+  LOG_PIN("  D1 Pin: ", this->data1_pin_);
+  LOG_PIN("  D2 Pin: ", this->data2_pin_);
+  LOG_PIN("  D3 Pin: ", this->data3_pin_);
+  LOG_PIN("  Power Pin: ", this->power_pin_);
   ESP_LOGCONFIG(TAG, "  Mode: %s", this->mode_1bit_ ? "1-bit" : "4-bit");
   ESP_LOGCONFIG(TAG, "  Mounted: %s", YESNO(this->mounted_));
 }
 
 void SDCard::init_power_pin_() {
-  gpio_config_t io_conf = {};
-  io_conf.intr_type = GPIO_INTR_DISABLE;
-  io_conf.mode = GPIO_MODE_OUTPUT;
-  io_conf.pin_bit_mask = (1ULL << this->power_pin_);
-  io_conf.pull_down_en = GPIO_PULLDOWN_DISABLE;
-  io_conf.pull_up_en = GPIO_PULLUP_DISABLE;
-  gpio_config(&io_conf);
-  
-  gpio_set_level(static_cast<gpio_num_t>(this->power_pin_), 1);  // Turn on SD card power
+  this->power_pin_->setup();
+  this->power_pin_->digital_write(true);  // Turn on SD card power
   ESP_LOGI(TAG, "SD Card power turned ON");
 }
 
@@ -56,13 +53,13 @@ void SDCard::init_sd_card_() {
 
   sdmmc_slot_config_t slot_config = SDMMC_SLOT_CONFIG_DEFAULT();
   slot_config.width = this->mode_1bit_ ? 1 : 4;
-  slot_config.clk = static_cast<gpio_num_t>(this->clk_pin_);
-  slot_config.cmd = static_cast<gpio_num_t>(this->cmd_pin_);
-  slot_config.d0 = static_cast<gpio_num_t>(this->data0_pin_);
+  slot_config.clk = static_cast<gpio_num_t>(this->clk_pin_->get_pin());
+  slot_config.cmd = static_cast<gpio_num_t>(this->cmd_pin_->get_pin());
+  slot_config.d0 = static_cast<gpio_num_t>(this->data0_pin_->get_pin());
   if (!this->mode_1bit_) {
-    slot_config.d1 = static_cast<gpio_num_t>(this->data1_pin_);
-    slot_config.d2 = static_cast<gpio_num_t>(this->data2_pin_);
-    slot_config.d3 = static_cast<gpio_num_t>(this->data3_pin_);
+    slot_config.d1 = static_cast<gpio_num_t>(this->data1_pin_->get_pin());
+    slot_config.d2 = static_cast<gpio_num_t>(this->data2_pin_->get_pin());
+    slot_config.d3 = static_cast<gpio_num_t>(this->data3_pin_->get_pin());
   }
 
   esp_vfs_fat_sdmmc_mount_config_t mount_config = {
