@@ -3,10 +3,20 @@ import esphome.config_validation as cv
 from esphome.const import CONF_ID, CONF_CLK_PIN, CONF_CMD_PIN, CONF_DATA0_PIN, CONF_DATA1_PIN, CONF_DATA2_PIN, CONF_DATA3_PIN
 from esphome import pins
 from esphome.components import sd_mmc_card
+from esphome.const import (
+    CONF_ID,
+    CONF_CLK_PIN,
+    CONF_CMD_PIN,
+    CONF_DATA0_PIN,
+    CONF_DATA1_PIN,
+    CONF_DATA2_PIN,
+    CONF_DATA3_PIN,
+    CONF_MODE,
+)
 
 DEPENDENCIES = ["esp32"]
 AUTO_LOAD = ["sd_mmc_card"]
-from esphome.core import CORE
+
 
 sd_card_ns = cg.esphome_ns.namespace("sd_card")
 SDCard = sd_card_ns.class_("SDCard", cg.Component)
@@ -14,6 +24,12 @@ SDCard = sd_card_ns.class_("SDCard", cg.Component)
 CONF_SD_MMC_CARD_ID = "sd_mmc_card_id"
 CONF_MODE_1BIT = "mode_1bit"
 CONF_POWER_PIN = "power_pin"
+CONF_CMD_PIN = "cmd_pin"
+CONF_DATA0_PIN = "data0_pin"
+CONF_DATA1_PIN = "data1_pin"
+CONF_DATA2_PIN = "data2_pin"
+CONF_DATA3_PIN = "data3_pin"
+
 
 CONFIG_SCHEMA = cv.Schema({
     cv.GenerateID(): cv.declare_id(SDCard),
