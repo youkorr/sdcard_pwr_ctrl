@@ -10,12 +10,12 @@ namespace sd_card {
 
 class SDCard : public Component {
  public:
-  void set_clk_pin(GPIOPin *pin) { clk_pin_ = pin; clk_pin_num_ = pin->get_pin(); }
-  void set_cmd_pin(GPIOPin *pin) { cmd_pin_ = pin; cmd_pin_num_ = pin->get_pin(); }
-  void set_data0_pin(GPIOPin *pin) { data0_pin_ = pin; data0_pin_num_ = pin->get_pin(); }
-  void set_data1_pin(GPIOPin *pin) { data1_pin_ = pin; data1_pin_num_ = pin->get_pin(); }
-  void set_data2_pin(GPIOPin *pin) { data2_pin_ = pin; data2_pin_num_ = pin->get_pin(); }
-  void set_data3_pin(GPIOPin *pin) { data3_pin_ = pin; data3_pin_num_ = pin->get_pin(); }
+  void set_clk_pin(GPIOPin *pin) { clk_pin_ = pin; clk_pin_num_ = pin->to_int(); }
+  void set_cmd_pin(GPIOPin *pin) { cmd_pin_ = pin; cmd_pin_num_ = pin->to_int(); }
+  void set_data0_pin(GPIOPin *pin) { data0_pin_ = pin; data0_pin_num_ = pin->to_int(); }
+  void set_data1_pin(GPIOPin *pin) { data1_pin_ = pin; data1_pin_num_ = pin->to_int(); }
+  void set_data2_pin(GPIOPin *pin) { data2_pin_ = pin; data2_pin_num_ = pin->to_int(); }
+  void set_data3_pin(GPIOPin *pin) { data3_pin_ = pin; data3_pin_num_ = pin->to_int(); }
   void set_power_pin(GPIOPin *pin) { power_pin_ = pin; }
   void set_mode_1bit(bool mode) { mode_1bit_ = mode; }
 
