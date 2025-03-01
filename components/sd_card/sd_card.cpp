@@ -50,26 +50,49 @@ void SDCard::init_power_pin_() {
 }
 
 void SDCard::init_sd_card_() {
-  // ... (le reste du code reste inchangé)
+  sdmmc_host_t host = SDMMC_HOST_DEFAULT();
+  if (this->mode_1bit_) {
+    host.flags = SDMMC_HOST_FLAG_1BIT;
+  }
+  host.max_freq_khz = SDMMC_FREQ_DEFAULT;
+
+  sdmmc_slot_config_t slot_config = SDMMC_SLOT_CONFIG_DEFAULT();
+  slot_config.width = this->mode_1bit_ ? 1 : 4;
+  slot_config.clk = static_cast<gpio_num_t>(this->clk_pin_->get_pin());
+  slot_config.cmd = static_cast<gpio_num_t>(this->cmd_pin_->get_pin());
+  slot_config.d0 = static_cast<gpio_num_t>(this->data0_pin_->get_pin());
+  if (!this->mode_1bit_) {
+    slot_config.d1 = static_cast<gpio_num_t>(this->data1_pin_->get_pin());
+    slot_config.d2 = static_cast<gpio_num_t>(this->data2_pin_->get_pin());
+    slot_config.d3 = static_cast<gpio_num_t>(this->data3_pin_->get_pin());
+  }
+
+  esp_vfs_fat_sdmmc_mount_config_t mount_config = {
+      .format_if_mount_failed = false,
+      .max_files = 5,
+      .allocation_unit_size = 16 * 1024
+  };
+
+  esp_err_t ret = esp_vfs_fat_sdmmc_mount("/sdcard", &host, &slot_config, &mount_config, &this->card_);
+
+  if (ret != ESP_OK) {
+    if (ret == ESP_FAIL) {
+      ESP_LOGE(TAG, "Failed to mount filesystem.");
+    } else {
+      ESP_LOGE(TAG, "Failed to initialize the card (%s). "
+               "Make sure SD card lines have pull-up resistors in place.",
+               esp_err_to_name(ret));
+    }
+    return;
+  }
+
+  this->mounted_ = true;
+  ESP_LOGI(TAG, "SD card mounted successfully");
 }
 
 void SDCard::update_text_sensors_() {
-  if (this->sd_card_type_sensor_ != nullptr && this->card_ != nullptr) {
-    const char *card_type = "Unknown";
-    switch (this->card_->type) {
-      case SDMMC_CARD_TYPE_SDSC:
-        card_type = "SDSC";
-        break;
-      case SDMMC_CARD_TYPE_SDHC:
-        card_type = "SDHC";
-        break;
-      case SDMMC_CARD_TYPE_SDXC:
-        card_type = "SDXC";
-        break;
-      default:
-        break;
-    }
-    this->sd_card_type_sensor_->publish_state(card_type);
+  if (this->sd_card_type_sensor_ != nullptr) {
+    this->sd_card_type_sensor_->publish_state(this->card_ ? "SD Card" : "No Card");
   }
 
   if (this->sd_card_status_sensor_ != nullptr) {
