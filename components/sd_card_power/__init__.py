@@ -7,15 +7,15 @@ from esphome.components import sd_mmc_card
 DEPENDENCIES = ["esp32"]
 AUTO_LOAD = ["sd_mmc_card"]
 
-esp32s3box3_sd_card_ns = cg.esphome_ns.namespace("esp32s3box3_sd_card")
-ESP32S3BOX3SDCard = esp32s3box3_sd_card_ns.class_("ESP32S3BOX3SDCard", cg.Component)
+sd_card_ns = cg.esphome_ns.namespace("sd_card")
+SDCard = sd_card_ns.class_("SDCard", cg.Component)
 
 CONF_SD_MMC_CARD_ID = "sd_mmc_card_id"
 CONF_MODE_1BIT = "mode_1bit"
 CONF_POWER_PIN = "power_pin"
 
 CONFIG_SCHEMA = cv.Schema({
-    cv.GenerateID(): cv.declare_id(ESP32S3BOX3SDCard),
+    cv.GenerateID(): cv.declare_id(SDCard),
     cv.GenerateID(CONF_SD_MMC_CARD_ID): cv.use_id(sd_mmc_card.SdMmc),
     cv.Required(CONF_CLK_PIN): pins.internal_gpio_output_pin_number,
     cv.Required(CONF_CMD_PIN): pins.internal_gpio_output_pin_number,
