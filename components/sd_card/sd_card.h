@@ -3,37 +3,19 @@
 #include "esphome/core/hal.h"
 #include "driver/sdmmc_types.h"
 #include "esphome/components/text_sensor/text_sensor.h"
-#include "esphome/core/gpio.h"
 
 namespace esphome {
 namespace sd_card {
 
 class SDCard : public Component {
  public:
-  void set_clk_pin(GPIOPin *pin) { 
-    clk_pin_ = pin; 
-    clk_pin_num_ = pin ? pin->pin() : -1;  // Utilisation de pin()
-  }
-  void set_cmd_pin(GPIOPin *pin) { 
-    cmd_pin_ = pin; 
-    cmd_pin_num_ = pin ? pin->pin() : -1;  // Utilisation de pin()
-  }
-  void set_data0_pin(GPIOPin *pin) { 
-    data0_pin_ = pin; 
-    data0_pin_num_ = pin ? pin->pin() : -1;  // Utilisation de pin()
-  }
-  void set_data1_pin(GPIOPin *pin) { 
-    data1_pin_ = pin; 
-    data1_pin_num_ = pin ? pin->pin() : -1;  // Utilisation de pin()
-  }
-  void set_data2_pin(GPIOPin *pin) { 
-    data2_pin_ = pin; 
-    data2_pin_num_ = pin ? pin->pin() : -1;  // Utilisation de pin()
-  }
-  void set_data3_pin(GPIOPin *pin) { 
-    data3_pin_ = pin; 
-    data3_pin_num_ = pin ? pin->pin() : -1;  // Utilisation de pin()
-  }
+  // Setters pour les numéros de pin bruts
+  void set_clk_pin(uint8_t pin) { clk_pin_ = pin; }
+  void set_cmd_pin(uint8_t pin) { cmd_pin_ = pin; }
+  void set_data0_pin(uint8_t pin) { data0_pin_ = pin; }
+  void set_data1_pin(uint8_t pin) { data1_pin_ = pin; }
+  void set_data2_pin(uint8_t pin) { data2_pin_ = pin; }
+  void set_data3_pin(uint8_t pin) { data3_pin_ = pin; }
 
   void set_power_pin(GPIOPin *pin) { power_pin_ = pin; }
   void set_mode_1bit(bool mode_1bit) { mode_1bit_ = mode_1bit; }
@@ -49,22 +31,15 @@ class SDCard : public Component {
   void init_sd_card_();
   void update_text_sensors_();
 
-  // Variables membres
-  GPIOPin *clk_pin_{nullptr};
-  GPIOPin *cmd_pin_{nullptr};
-  GPIOPin *data0_pin_{nullptr};
-  GPIOPin *data1_pin_{nullptr};
-  GPIOPin *data2_pin_{nullptr};
-  GPIOPin *data3_pin_{nullptr};
+  // Stockage des numéros de pin bruts
+  uint8_t clk_pin_;
+  uint8_t cmd_pin_;
+  uint8_t data0_pin_;
+  uint8_t data1_pin_;
+  uint8_t data2_pin_;
+  uint8_t data3_pin_;
+  
   GPIOPin *power_pin_{nullptr};
-  
-  int clk_pin_num_{-1};
-  int cmd_pin_num_{-1};
-  int data0_pin_num_{-1};
-  int data1_pin_num_{-1};
-  int data2_pin_num_{-1};
-  int data3_pin_num_{-1};
-  
   bool mode_1bit_{false};
   bool mounted_{false};
   sdmmc_card_t *card_{nullptr};
