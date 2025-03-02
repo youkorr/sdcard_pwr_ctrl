@@ -19,8 +19,6 @@ class SDCard : public Component {
 
   void set_power_pin(GPIOPin *pin) { power_pin_ = pin; }
   void set_mode_1bit(bool mode_1bit) { mode_1bit_ = mode_1bit; }
-  void set_card_type_sensor(text_sensor::TextSensor *sensor) { sd_card_type_sensor_ = sensor; }
-  void set_card_status_sensor(text_sensor::TextSensor *sensor) { sd_card_status_sensor_ = sensor; }
 
   void setup() override;
   void loop() override;
@@ -29,7 +27,7 @@ class SDCard : public Component {
  protected:
   void init_power_pin_();
   void init_sd_card_();
-  void update_text_sensors_();
+  
 
   // Stockage des numéros de pin bruts
   uint8_t clk_pin_;
