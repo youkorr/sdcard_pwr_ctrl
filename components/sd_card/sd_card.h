@@ -2,7 +2,8 @@
 #include "esphome/core/component.h"
 #include "esphome/core/hal.h"
 #include "driver/sdmmc_types.h"
-#include "esphome/components/text_sensor/text_sensor.h"
+#include "driver/gpio.h" // Make sure this line is present!
+
 
 namespace esphome {
 namespace sd_card {
