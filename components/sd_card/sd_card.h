@@ -44,8 +44,7 @@ class SDCard : public Component {
   bool mounted_{false};
   sdmmc_card_t *card_{nullptr};
   
-  text_sensor::TextSensor *sd_card_type_sensor_{nullptr};
-  text_sensor::TextSensor *sd_card_status_sensor_{nullptr};
+
 };
 
 }  // namespace sd_card
