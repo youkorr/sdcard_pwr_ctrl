@@ -10,12 +10,12 @@ namespace sd_card {
 class SDCard : public Component {
  public:
   // Setters pour les numéros de pin bruts
-  void set_clk_pin(uint8_t pin) { clk_pin_ = pin; }
-  void set_cmd_pin(uint8_t pin) { cmd_pin_ = pin; }
-  void set_data0_pin(uint8_t pin) { data0_pin_ = pin; }
-  void set_data1_pin(uint8_t pin) { data1_pin_ = pin; }
-  void set_data2_pin(uint8_t pin) { data2_pin_ = pin; }
-  void set_data3_pin(uint8_t pin) { data3_pin_ = pin; }
+  void set_clk_pin(gpio_num_t pin) { clk_pin_ = pin; }
+  void set_cmd_pin(gpio_num_t pin) { cmd_pin_ = pin; }
+  void set_data0_pin(gpio_num_t pin) { data0_pin_ = pin; }
+  void set_data1_pin(gpio_num_t pin) { data1_pin_ = pin; }
+  void set_data2_pin(gpio_num_t pin) { data2_pin_ = pin; }
+  void set_data3_pin(gpio_num_t pin) { data3_pin_ = pin; }
 
   void set_power_pin(GPIOPin *pin) { power_pin_ = pin; }
   void set_mode_1bit(bool mode_1bit) { mode_1bit_ = mode_1bit; }
@@ -30,12 +30,12 @@ class SDCard : public Component {
   
 
   // Stockage des numéros de pin bruts
-  uint8_t clk_pin_;
-  uint8_t cmd_pin_;
-  uint8_t data0_pin_;
-  uint8_t data1_pin_;
-  uint8_t data2_pin_;
-  uint8_t data3_pin_;
+  gpio_num_t clk_pin_;
+  gpio_num_t cmd_pin_;
+  gpio_num_t data0_pin_;
+  gpio_num_t data1_pin_;
+  gpio_num_t data2_pin_;
+  gpio_num_t data3_pin_;
   
   GPIOPin *power_pin_{nullptr};
   bool mode_1bit_{false};
