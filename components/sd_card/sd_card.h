@@ -9,7 +9,6 @@ namespace sd_card {
 
 class SDCard : public Component {
  public:
-  // Setters pour les numéros de pin bruts
   void set_clk_pin(gpio_num_t pin) { clk_pin_ = pin; }
   void set_cmd_pin(gpio_num_t pin) { cmd_pin_ = pin; }
   void set_data0_pin(gpio_num_t pin) { data0_pin_ = pin; }
