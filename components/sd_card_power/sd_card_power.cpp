@@ -8,7 +8,6 @@ namespace sd_card_power {
 static const char *TAG = "sd_card_power";
 
 void SDCardPower::setup() {
-  // Enable SDCard power
   if (get_sdcard_power_ctrl_gpio() >= 0) {
     gpio_config_t gpio_cfg = {
       .pin_bit_mask = 1ULL << get_sdcard_power_ctrl_gpio(),
