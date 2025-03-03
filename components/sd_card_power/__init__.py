@@ -11,13 +11,14 @@ SDCardPower = sd_card_power_ns.class_('SDCardPower', cg.Component)
 
 CONFIG_SCHEMA = cv.Schema({
     cv.GenerateID(): cv.declare_id(SDCardPower),
-    cv.Optional(CONF_POWER_CTRL_PIN, default=43): cv.int_range(min=0, max=48),
+    cv.Optional(CONF_POWER_CTRL_PIN, default=-1): cv.int_range(min=-1, max=48),
 }).extend(cv.COMPONENT_SCHEMA)
 
 def to_code(config):
     var = cg.new_Pvariable(config[CONF_ID])
     cg.add(var.set_power_ctrl_pin(config[CONF_POWER_CTRL_PIN]))
     yield cg.register_component(var, config)
+
 
 
 
