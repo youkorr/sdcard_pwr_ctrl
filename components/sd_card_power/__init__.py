@@ -11,7 +11,7 @@ SDCardPower = sd_card_power_ns.class_('SDCardPower', cg.Component)
 
 CONFIG_SCHEMA = cv.Schema({
     cv.GenerateID(): cv.declare_id(SDCardPower),
-    cv.Required(CONF_POWER_CTRL_PIN): cv.int_range(min=0, max=48),  # Plage des pins GPIO ESP32
+    cv.Optional(CONF_POWER_CTRL_PIN, default=43): cv.int_range(min=0, max=48),
 }).extend(cv.COMPONENT_SCHEMA)
 
 def to_code(config):
