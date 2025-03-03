@@ -13,12 +13,12 @@ class SDCardPower : public Component {
   void setup() override;
   void set_power(bool state);
   
-  void set_power_ctrl_pin(int pin) { 
+  void set_power_ctrl_pin(int8_t pin) { 
     this->power_ctrl_pin_ = pin; 
   }
   
  protected:
-  int power_ctrl_pin_{GPIO_NUM_43};  // Valeur par défaut basée sur votre configuration
+  int8_t power_ctrl_pin_{-1};  // Changement à int8_t avec valeur par défaut -1
 };
 
 }  // namespace sd_card_power
