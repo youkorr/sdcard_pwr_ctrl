@@ -15,11 +15,10 @@ class SDCardPower : public Component {
   
   void set_power_ctrl_pin(int pin) { 
     this->power_ctrl_pin_ = pin; 
-    ESP_LOGI("SDCardPower", "Power control pin set to %d", pin);
   }
   
  protected:
-  int power_ctrl_pin_{-1};
+  int power_ctrl_pin_{GPIO_NUM_43};  // Valeur par défaut basée sur votre configuration
 };
 
 }  // namespace sd_card_power
