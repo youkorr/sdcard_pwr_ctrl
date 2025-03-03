@@ -13,12 +13,12 @@ void SDCardPower::setup() {
       .intr_type = GPIO_INTR_DISABLE
     };
     gpio_config(&gpio_cfg);
-    gpio_set_level(power_ctrl_pin_, 1); // Active l'alimentation de la carte SD
+    gpio_set_level(static_cast<gpio_num_t>(power_ctrl_pin_), 1); // Active l'alimentation de la carte SD
   }
 }
 
 void SDCardPower::set_power(bool state) {
-  gpio_set_level(power_ctrl_pin_, state ? 1 : 0);
+  gpio_set_level(static_cast<gpio_num_t>(power_ctrl_pin_), state ? 1 : 0);
 }
 
 }  // namespace sd_card_power
