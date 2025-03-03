@@ -19,8 +19,8 @@ void SDCardPower::setup() {
 
   // Configuration du GPIO pour le contrôle d'alimentation
   gpio_config_t gpio_cfg = {
+    .pin_bit_mask = 1ULL << this->power_ctrl_pin_,  // Correction de l'ordre des champs
     .mode = GPIO_MODE_OUTPUT,
-    .pin_bit_mask = 1ULL << this->power_ctrl_pin_,
     .pull_up_en = GPIO_PULLUP_DISABLE,
     .pull_down_en = GPIO_PULLDOWN_DISABLE,
     .intr_type = GPIO_INTR_DISABLE
