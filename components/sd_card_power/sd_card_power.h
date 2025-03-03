@@ -3,8 +3,6 @@
 #include "esphome.h"
 #include "driver/gpio.h"
 
-#define SDCARD_PWR_CTRL GPIO_NUM_43
-
 namespace esphome {
 namespace sd_card_power {
 
@@ -12,6 +10,10 @@ class SDCardPower : public Component {
  public:
   void setup() override;
   void set_power(bool state);
+  void set_power_ctrl_pin(int pin) { power_ctrl_pin_ = pin; }
+
+ private:
+  int power_ctrl_pin_;
 };
 
 }  // namespace sd_card_power
