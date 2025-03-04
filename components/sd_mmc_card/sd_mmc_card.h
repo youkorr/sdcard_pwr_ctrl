@@ -20,9 +20,7 @@ class SdMmc : public Component {
   void set_data2_pin(int8_t pin) { data2_pin_ = pin; }
   void set_data3_pin(int8_t pin) { data3_pin_ = pin; }
   void set_mode_1bit(bool mode) { mode_1bit_ = mode; }
-  
-  // Nouvelle méthode pour le pin de contrôle de puissance
-  void set_power_ctrl_pin(int8_t pin) { power_ctrl_pin_ = pin; }
+  void set_power_ctrl_pin(int8_t pin) { power_ctrl_pin_ = pin; } // Ajout de set_power_ctrl_pin
 
  protected:
   int8_t clk_pin_{-1};
@@ -30,12 +28,12 @@ class SdMmc : public Component {
   int8_t data0_pin_{-1};
   int8_t data1_pin_{-1};
   int8_t data2_pin_{-1};
-  int8_t data3_pin_{-1};
-  int8_t power_ctrl_pin_{-1};  // Ajout du pin de contrôle de puissance
-  bool mode_1bit_{
-  bool mode_1bit_{false};  // Initialisation correcte de mode_1bit_
+  int8_t data3_pin_{-1};  // Assure-toi qu'il est bien là
+  int8_t power_ctrl_pin_{-1};  // Assure-toi qu'il est bien là
+  bool mode_1bit_{false};
 };
 
 }  // namespace sd_mmc_card
 }  // namespace esphome
+
    
