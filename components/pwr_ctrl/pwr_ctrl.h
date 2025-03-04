@@ -1,20 +1,17 @@
 #pragma once
 
-#include "esphome/core/component.h"
-#include "driver/gpio.h"
-
 namespace esphome {
 namespace pwr_ctrl {
 
-class SdMmcPowerCtrl : public Component {
+class SdMmcPowerCtrl {
  public:
-  void setup() override;
+  // Déclaration de la fonction setup() générique
+  void setup();
 
-  void set_power_ctrl_pin(int8_t pin) { power_ctrl_pin_ = pin; }
-
- protected:
-  int8_t power_ctrl_pin_{-1};
+  // Déclaration de la fonction setup() spécifique à ESP-IDF
+  void setup_idf_specific();
 };
 
 }  // namespace pwr_ctrl
 }  // namespace esphome
+
