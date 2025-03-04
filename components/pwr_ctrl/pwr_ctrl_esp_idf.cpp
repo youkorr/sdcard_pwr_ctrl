@@ -1,3 +1,4 @@
+#ifdef USE_ESP_IDF
 #include "pwr_ctrl.h"
 #include "esp_log.h"
 #include "driver/gpio.h"  // Pour la gestion GPIO spécifique à ESP-IDF
@@ -24,5 +25,5 @@ void SdMmcPowerCtrl::setup_idf_specific() {
 }  // namespace pwr_ctrl
 }  // namespace esphome
 
-
 #endif  // USE_ESP_IDF
+
