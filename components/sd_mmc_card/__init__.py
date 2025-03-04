@@ -1,7 +1,6 @@
 import esphome.codegen as cg
 import esphome.config_validation as cv
 from esphome.const import CONF_ID
-from esphome.components import esp32
 
 DEPENDENCIES = ['esp32']
 MULTI_CONF = True
@@ -14,8 +13,10 @@ def validate_gpio_pin(value):
     if isinstance(value, str) and value.startswith('GPIO'):
         value = int(value[4:])
     
-    # Validation du pin pour ESP32
-    return esp32.validate_gpio_pin(value)
+    # Validation simple du pin
+    if not (0 <= value <= 48):
+        raise cv.Invalid(f"GPIO pin must be between 0 and 48, got {value}")
+    return value
 
 CONFIG_SCHEMA = cv.Schema({
     cv.GenerateID(): cv.declare_id(SdMmc),
