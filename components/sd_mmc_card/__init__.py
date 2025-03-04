@@ -20,16 +20,17 @@ def validate_gpio_pin(value):
 
 CONFIG_SCHEMA = cv.Schema({
     cv.GenerateID(): cv.declare_id(SdMmc),
-    cv.Optional('power_ctrl_pin'): validate_gpio_pin,  # Garder uniquement power_ctrl_pin
+    cv.Optional('power_ctrl_pin'): validate_gpio_pin,  # Assurez-vous que ceci est optionnel et bien validé
 }).extend(cv.COMPONENT_SCHEMA)
 
 def to_code(config):
     var = cg.new_Pvariable(config[CONF_ID])
 
-    # Conversion de power_ctrl_pin si nécessaire
+    # Si power_ctrl_pin est configuré, on l'ajoute à la classe
     if 'power_ctrl_pin' in config:
         cg.add(var.set_power_ctrl_pin(config['power_ctrl_pin']))
 
     yield cg.register_component(var, config)
+
 
 
