@@ -10,7 +10,6 @@ namespace sd_mmc_card {
 static const char *TAG = "sd_mmc_card";
 
 void SdMmc::setup() {
-  // Enable SDCard power if power control pin is configured
   if (this->power_ctrl_pin_ >= 0) {
     gpio_config_t gpio_cfg = {
       .pin_bit_mask = 1ULL << this->power_ctrl_pin_,
@@ -44,10 +43,8 @@ void SdMmc::setup() {
     slot_config.d3 = static_cast<gpio_num_t>(data3_pin_);
   }
 
-  // Ajustement du mode 1-bit si nécessaire
   host.flags = mode_1bit_ ? SDMMC_HOST_FLAG_1BIT : 0;
 
-  // Tentative de montage de la carte SD
   sdmmc_card_t* card = NULL;
   esp_err_t result = esp_vfs_fat_sdmmc_mount("/sdcard", &host, &slot_config, &mount_config, &card);
   
@@ -77,8 +74,9 @@ void SdMmc::dump_config() {
   if (power_ctrl_pin_ >= 0)
     ESP_LOGCONFIG(TAG, "  Power Control Pin: %d", power_ctrl_pin_);
   
-bool mode_1bit_{false};  // Initialisation correcte
-};
+  ESP_LOGCONFIG(TAG, "  Mode: %s", mode_1bit_ ? "1-bit" : "4-bit");
+}
 
 }  // namespace sd_mmc_card
 }  // namespace esphome
+
