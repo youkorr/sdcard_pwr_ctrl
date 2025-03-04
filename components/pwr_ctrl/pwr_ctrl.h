@@ -5,6 +5,8 @@ namespace pwr_ctrl {
 
 class SdMmcPowerCtrl {
  public:
+  int power_ctrl_pin_;  // Déclare la variable ici, elle doit être définie dans ton code ou via la configuration
+
   // Déclaration de la fonction setup() générique
   void setup();
 
@@ -14,4 +16,5 @@ class SdMmcPowerCtrl {
 
 }  // namespace pwr_ctrl
 }  // namespace esphome
+
 
