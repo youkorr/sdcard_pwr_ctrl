@@ -77,8 +77,8 @@ void SdMmc::dump_config() {
   if (power_ctrl_pin_ >= 0)
     ESP_LOGCONFIG(TAG, "  Power Control Pin: %d", power_ctrl_pin_);
   
-  ESP_LOGCONFIG(TAG, "  Mode: %s", mode_1bit_ ? "1-bit" : "4-bit");
-}
+bool mode_1bit_{false};  // Initialisation correcte
+};
 
 }  // namespace sd_mmc_card
 }  // namespace esphome
