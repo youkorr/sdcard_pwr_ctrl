@@ -11,8 +11,14 @@ SdMmc = sdmmc_card_ns.class_('SdMmc', cg.Component)
 
 CONFIG_SCHEMA = cv.Schema({
     cv.GenerateID(): cv.declare_id(SdMmc),
-    cv.Optional(CONF_POWER_CTRL_PIN): cv.gpio_pin,
-    # Autres options existantes de configuration
+    cv.Optional(CONF_POWER_CTRL_PIN): cv.gpio_pin_number,
+    cv.Optional('clk_pin'): cv.gpio_pin_number,
+    cv.Optional('cmd_pin'): cv.gpio_pin_number,
+    cv.Optional('data0_pin'): cv.gpio_pin_number,
+    cv.Optional('data1_pin'): cv.gpio_pin_number,
+    cv.Optional('data2_pin'): cv.gpio_pin_number,
+    cv.Optional('data3_pin'): cv.gpio_pin_number,
+    cv.Optional('mode_1bit', default=False): cv.boolean,
 }).extend(cv.COMPONENT_SCHEMA)
 
 def to_code(config):
