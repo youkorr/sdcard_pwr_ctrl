@@ -33,3 +33,9 @@ class SdMmc : public Component {
   int8_t data3_pin_{-1};
   int8_t power_ctrl_pin_{-1};  // Ajout du pin de contrôle de puissance
   bool mode_1bit_{
+  bool mode_1bit_{false};  // Initialisation correcte de mode_1bit_
+};
+
+}  // namespace sd_mmc_card
+}  // namespace esphome
+   
