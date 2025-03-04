@@ -20,18 +20,16 @@ def validate_gpio_pin(value):
 
 CONFIG_SCHEMA = cv.Schema({
     cv.GenerateID(): cv.declare_id(SdMmc),
-    cv.Required('power_ctrl_pin'): validate_gpio_pin,  # Garde uniquement power_ctrl_pin
+    cv.Optional('power_ctrl_pin'): validate_gpio_pin,  # Garder uniquement power_ctrl_pin
 }).extend(cv.COMPONENT_SCHEMA)
 
 def to_code(config):
     var = cg.new_Pvariable(config[CONF_ID])
-    
-    # Conversion du pin power_ctrl_pin
-    def convert_pin(pin):
-        return int(pin[4:]) if isinstance(pin, str) and pin.startswith('GPIO') else pin
 
+    # Conversion de power_ctrl_pin si nécessaire
     if 'power_ctrl_pin' in config:
-        cg.add(var.set_power_ctrl_pin(convert_pin(config['power_ctrl_pin'])))
-    
+        cg.add(var.set_power_ctrl_pin(config['power_ctrl_pin']))
+
     yield cg.register_component(var, config)
+
 
